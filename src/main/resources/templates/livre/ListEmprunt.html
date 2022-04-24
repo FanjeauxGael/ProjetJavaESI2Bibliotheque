@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>List Users</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <p>
+                Bienvenue <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+            </p>
+            <input class="btn btn-primary mb-1" type="submit" value="Deconnexion" />
+        </form>
+    </div>
+    <div>
+        <h1>Liste des livres en cours d'emprunt</h1>
+    </div>
+
+    <div>
+        <button class="btn btn-primary mb-1" onclick="history.back()">page precedente</button>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Description</th>
+                <th>Date de parution</th>
+                <th>Etat</th>
+                <th>Nb pages</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="livre: ${booksList}">
+                <td th:text="${livre.getTitre()}">Etat</td>
+                <td th:text="${livre.getAuteur()}">Auteur</td>
+                <td th:text="${livre.getDescription()}">Description</td>
+                <td th:text="${livre.getDateParution()}">Date de parution</td>
+                <td th:text="${livre.getEtat()}">Etat</td>
+                <td th:text="${livre.getNbPages()}">Nb pages</td>
+                <td><a class="btn btn-primary" type="submit" th:href="@{/livres/returnBook(idLivre=${livre.getId()})}">rendre</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
